@@ -57,4 +57,9 @@ a:hover {
 
 .ncrowl-title {
 	font-weight: 700;
+	font-size:15pt;
+}
+
+.news-crowl>li:hover {
+	background:gray;
 }
