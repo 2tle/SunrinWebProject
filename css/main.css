@@ -61,5 +61,13 @@ a:hover {
 }
 
 .news-crowl>li:hover {
-	background:gray;
+	background:lightgray;
+}
+
+footer {
+	background: gray;
+	text-align: center;
+	height: 200px;
+	padding-top:100px;
+	
 }
