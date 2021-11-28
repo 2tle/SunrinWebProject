@@ -29,7 +29,7 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
       				<ul class="navbar-nav">
         				<li class="nav-item">
-          					<a class="nav-link active" aria-current="page" href="#">홈</a>
+          					<a class="nav-link active" aria-current="page" href="https://SunrinWebProject.2tle.repl.co">홈</a>
         				</li>
         				<li class="nav-item">
           					<a class="nav-link" href="https://SunrinWebProject.2tle.repl.co/sosic.html">대기 관련 소식</a>
@@ -47,29 +47,23 @@
 	
 	<div class="wrapper">
 		<div class="container">
-			<div class="imgslide">
-				<div class="imglist">
-					<div class="item">
-						<img src="images/slides/slide1.jpg" alt="" class="slideimg">
-						<span class="itemtext">식물을 심으면</span>
-					</div>
-					
-					<div class="item">
-						<img src="images/slides/slide2.jpg" alt="" class="slideimg">
-						<span class="itemtext">맑고 깨끗한 공기</span>
-					</div>
+			<div class="news-all">
+				<div class="ntitle">
+					자세한 대기소식
 				</div>
-			</div>
+				<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">제목</th>
+      <th scope="col">언론사</th>
+      <th scope="col">발행일</th>
+    </tr>
+  </thead>
+  <tbody id="tb_news">
+  </tbody>
+</table>
 
-			<div class="content-btm">
-				<span class="ncrowl">
-					<span class="ncrowl-title">오늘의 대기소식</span>&nbsp; &nbsp; 각 기사제목을 누르면 기사로 이동됩니다.
-					<ul class="news-crowl" id="news-cro">
-						<li><a href="#">기사</a></li>
-						<li><a href="#">기사2</a></li>
-						<li><a href="#">기사3</a></li>
-					</ul>
-				</span>
 			</div>
 
 		</div>
@@ -88,11 +82,11 @@
 
 
 	<div class="script">
-		<script src="script/jquery.min.js"></script>
-		<script src="script/bootstrap.min.js"></script>
-		<script src="script/script.js"></script>
+		<script src="./script/jquery.min.js"></script>
+		<script src="./script/bootstrap.min.js"></script>
+		<script src="./script/script.js"></script>
 		<script>
-			newsCrowl();
+			newsCrowlAll();
 		</script>
 	</div>
 </body>

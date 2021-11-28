@@ -19,10 +19,40 @@ function newsCrowl() {
 		document.getElementById('news-cro').innerHTML = htmld;
 
     }
+	
 
-};
+	
+	}
+	xmlHttp.open("GET", "https://sunrinjbtsbackend.2tle.repl.co/news", true);
 
-xmlHttp.open("GET", "https://sunrinjbtsbackend.2tle.repl.co/news", true);
-
-xmlHttp.send();
+	xmlHttp.send();
 }
+
+
+
+function newsCrowlAll() {
+	var xmlHttp1 = new XMLHttpRequest();   
+	xmlHttp1.onreadystatechange = function() {
+    if(this.status == 200 && this.readyState == this.DONE) {
+		var htmld ="";
+		var json = JSON.parse(xmlHttp1.responseText);
+        for(var i = 0; i< json.news.length; i++) {
+			var text = `<tr onclick="location.href='${json.news[i].link}'" style="cursor:hand"><th scope="row">${i+1}</th>`;
+			text += `<td>${json.news[i].title}</td>`;
+			text += `<td>${json.news[i].writer}</td>`;
+			text += `<td>${json.news[i].date}</td></tr></a>`;
+			htmld += text;
+		}
+		document.getElementById('tb_news').innerHTML = htmld;
+
+    }
+	
+	
+
+	}
+	xmlHttp1.open("GET", "https://sunrinjbtsbackend.2tle.repl.co/news/all", true);
+
+	xmlHttp1.send();
+}
+
+
