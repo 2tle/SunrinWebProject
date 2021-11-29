@@ -56,3 +56,27 @@ function newsCrowlAll() {
 }
 
 
+function getLocAndCurDt() {
+	navigator.geolocation.getCurrentPosition(
+		function(position) {
+			console.log("위도 : " + position.coords.latitude);
+			console.log("경도 : " + position.coords.longitude);
+			let lat =position.coords.latitude;
+			let lng =position.coords.longitude;
+			var xmlHttpReq = new XMLHttpRequest();
+			xmlHttpReq.onreadystatechange = function () {
+				var htmldt = "";
+				let dtk = JSON.parse(xmlHttpReq.responseText);
+				htmldt += `<li>미세먼지: ${dtk.current.pm25.v}</li>`
+				htmldt += `<li>초미세먼지: ${dtk.current.pm10.v}</li>`
+				htmldt += `<li>오존: ${dtk.current.o3.v}</li>`
+				//console.log(xmlHttpReq.responseText)
+
+
+				document.getElementById('air-dt').innerHTML = htmldt;
+			}
+			xmlHttpReq.open("GET",`https://sunrinjbtsbackend.2tle.repl.co/air?lat=${lat}&lng=${lng}`,true);
+			xmlHttpReq.send();
+		}, 
+	);
+}
