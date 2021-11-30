@@ -19,12 +19,8 @@ function newsCrowl() {
 		document.getElementById('news-cro').innerHTML = htmld;
 
     }
-	
-
-	
 	}
 	xmlHttp.open("GET", "https://sunrinjbtsbackend.2tle.repl.co/news", true);
-
 	xmlHttp.send();
 }
 
@@ -67,13 +63,72 @@ function getLocAndCurDt() {
 			xmlHttpReq.onreadystatechange = function () {
 				var htmldt = "";
 				let dtk = JSON.parse(xmlHttpReq.responseText);
-				htmldt += `<li>미세먼지: ${dtk.current.pm25.v}</li>`
-				htmldt += `<li>초미세먼지: ${dtk.current.pm10.v}</li>`
-				htmldt += `<li>오존: ${dtk.current.o3.v}</li>`
+				htmldt += `<li>미세먼지: ${dtk.current.pm10.v}</li>`
+				htmldt += `<li>초미세먼지: ${dtk.current.pm25.v}</li>`
 				//console.log(xmlHttpReq.responseText)
 
 
 				document.getElementById('air-dt').innerHTML = htmldt;
+			}
+			xmlHttpReq.open("GET",`https://sunrinjbtsbackend.2tle.repl.co/air?lat=${lat}&lng=${lng}`,true);
+			xmlHttpReq.send();
+		}, 
+	);
+}
+
+
+
+
+
+function getMoreAIR() {
+	navigator.geolocation.getCurrentPosition(
+		function(position) {
+			console.log("위도 : " + position.coords.latitude);
+			console.log("경도 : " + position.coords.longitude);
+			let lat =position.coords.latitude;
+			let lng =position.coords.longitude;
+			var xmlHttpReq = new XMLHttpRequest();
+			xmlHttpReq.onreadystatechange = function () {
+				var htmldt = "";
+				let dtk = JSON.parse(xmlHttpReq.responseText);
+				console.log(dtk)
+				var pm10Color;
+				var pm25Color;
+				var o3Color;
+				var coColor;
+				if(dtk.current.pm10.v <= 30) pm10Color = "bcir.png"
+				else if(dtk.current.pm10.v <= 80) pm10Color = "gcir.png"
+				else if(dtk.current.pm10.v <= 150) pm10Color = "ycir.png"
+				else pm10Color = "rcir.png"
+
+				if(dtk.current.pm25.v <= 15) pm25Color = "bcir.png"
+				else if(dtk.current.pm25.v <= 35) pm25Color = "gcir.png"
+				else if(dtk.current.pm25.v <= 75) pm25Color = "ycir.png"
+				else pm25Color = "rcir.png"
+
+				var o3 = dtk.current.o3.v / 1000
+				if(o3 <= 0.03) o3Color= "bcir.png"
+				else if(o3 <= 0.09) o3Color = "gcir.png"
+				else if(o3 <= 0.15) o3Color = "ycir.png"
+				else o3Color = "rcir.png"
+
+				var co = dtk.current.co.v;
+				if(co <= 2) coColor= "bcir.png"
+				else if(co <= 9) coColor = "gcir.png"
+				else if(co <= 15) coColor = "ycir.png"
+				else coColor = "rcir.png"
+
+
+
+				
+				htmldt += `<div>미세먼지: ${dtk.current.pm10.v}&nbsp;<img width=30 src="images/${pm10Color}"></div><br>`
+				htmldt += `<div>초미세먼지: ${dtk.current.pm25.v}&nbsp;<img width=30 src="images/${pm25Color}"></div><br>`
+				htmldt += `<div>오존: ${Math.round(o3 * 100000)/100000}&nbsp;<img width=30 src="images/${o3Color}"></div><br>`
+				htmldt += `<div>일산화탄소: ${co}&nbsp;<img width=30 src="images/${coColor}"></div><br>`
+				//console.log(xmlHttpReq.responseText)
+
+
+				document.getElementById('air-more').innerHTML = htmldt;
 			}
 			xmlHttpReq.open("GET",`https://sunrinjbtsbackend.2tle.repl.co/air?lat=${lat}&lng=${lng}`,true);
 			xmlHttpReq.send();
