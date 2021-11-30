@@ -13,7 +13,7 @@ function newsCrowl() {
 		var json = JSON.parse(xmlHttp.responseText);
 		var len = (json.news.length < 5) ? json.news.length : 5;
         for(var i = 0; i< len; i++) {
-			var text = "<li><a href='"+json.news[i].link+"'>"+json.news[i].title+"</a></li>";
+			var text = "<li><a href='"+json.news[i].link+"'>"+json.news[i].title+"</a></li><hr>";
 			htmld += text;
 		}
 		document.getElementById('news-cro').innerHTML = htmld;
