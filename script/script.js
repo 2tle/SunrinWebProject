@@ -2,7 +2,7 @@ jQuery(document).ready(function() {
 	$('.imglist .item:gt(0)').hide();
     setInterval(function() {
         $('.imglist .item:first-child').fadeOut().next('.item').fadeIn().end().appendTo('.imglist')
-    }, 6000);
+    }, 3000);
 });
 
 function newsCrowl() {
@@ -62,11 +62,19 @@ function getLocAndCurDt() {
 			var xmlHttpReq = new XMLHttpRequest();
 			xmlHttpReq.onreadystatechange = function () {
 				var htmldt = "";
+				
 				let dtk = JSON.parse(xmlHttpReq.responseText);
+				var o3 = dtk.current.o3.v / 1000;
+				console.log(o3)
+				o3 = Math.round(o3 * 100000)/100000;
+				console.log(o3)
+
 				htmldt += `<li>미세먼지: ${dtk.current.pm10.v}</li>`
 				htmldt += `<li>초미세먼지: ${dtk.current.pm25.v}</li>`
+				htmldt += `<li>오존: ${o3}</li>`
+				htmldt += `<li>일산화탄소: ${dtk.current.co.v}</li>`
 				//console.log(xmlHttpReq.responseText)
-
+			
 
 				document.getElementById('air-dt').innerHTML = htmldt;
 			}
@@ -90,12 +98,37 @@ function getMoreAIR() {
 			var xmlHttpReq = new XMLHttpRequest();
 			xmlHttpReq.onreadystatechange = function () {
 				var htmldt = "";
+				var htmlpost = "";
 				let dtk = JSON.parse(xmlHttpReq.responseText);
 				console.log(dtk)
 				var pm10Color;
 				var pm25Color;
 				var o3Color;
 				var coColor;
+
+				var postPm10Color;
+				var postPm25Color;
+				var postO3Color;
+				var postPm10 = dtk.forecast.daily.pm10[2].avg;
+				var postPm25 = dtk.forecast.daily.pm25[2].avg;
+				var postO3 = dtk.forecast.daily.o3[3].avg / 1000;
+
+				if(postPm10 <= 30) postPm10Color = "bcir.png"
+				else if(postPm10 <= 80) postPm10Color = "gcir.png"
+				else if(postPm10 <= 150) postPm10Color = "ycir.png"
+				else postPm10Color = "rcir.png"
+
+				if(postPm25<= 15) postPm25Color = "bcir.png"
+				else if(postPm25 <= 35) postPm25Color = "gcir.png"
+				else if(postPm25 <= 75) postPm25Color = "ycir.png"
+				else postPm25Color = "rcir.png"
+
+				if(postO3 <= 0.03) postO3Color= "bcir.png"
+				else if(postO3 <= 0.09) postO3Color = "gcir.png"
+				else if(postO3 <= 0.15) postO3Color = "ycir.png"
+				else postO3Color = "rcir.png"
+
+
 				if(dtk.current.pm10.v <= 30) pm10Color = "bcir.png"
 				else if(dtk.current.pm10.v <= 80) pm10Color = "gcir.png"
 				else if(dtk.current.pm10.v <= 150) pm10Color = "ycir.png"
@@ -125,10 +158,14 @@ function getMoreAIR() {
 				htmldt += `<div>초미세먼지: ${dtk.current.pm25.v}&nbsp;<img width=30 src="images/${pm25Color}"></div><br>`
 				htmldt += `<div>오존: ${Math.round(o3 * 100000)/100000}&nbsp;<img width=30 src="images/${o3Color}"></div><br>`
 				htmldt += `<div>일산화탄소: ${co}&nbsp;<img width=30 src="images/${coColor}"></div><br>`
-				//console.log(xmlHttpReq.responseText)
+				
+
+				htmlpost = `<div>미세먼지: ${postPm10}&nbsp;<img width=30 src="images/${postPm10Color}"></div><br><div>초미세먼지: ${postPm25}&nbsp;<img width=30 src="images/${postPm25Color}"></div><br><div>오존: ${Math.round(postO3 * 100000)/100000}&nbsp;<img width=30 src="images/${postO3Color}"></div><br>`
+
 
 
 				document.getElementById('air-more').innerHTML = htmldt;
+				document.querySelector("#air-more-post").innerHTML = htmlpost;
 			}
 			xmlHttpReq.open("GET",`https://sunrinjbtsbackend.2tle.repl.co/air?lat=${lat}&lng=${lng}`,true);
 			xmlHttpReq.send();

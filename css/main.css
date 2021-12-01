@@ -19,6 +19,7 @@ a:hover {
 }
 
 .imglist {
+	display: block;
 	position: relative;
 	height:400px;
 }
@@ -48,6 +49,13 @@ a:hover {
 	text-align:center;
 	vertical-align: middle;
 }
+.itemtext {
+	display: flex;
+	vertical-align: middle;
+	align-items: center;
+	justify-content: center;
+}
+
 
 .content-btm {
 	width: 100%;
@@ -64,17 +72,9 @@ a:hover {
 }
 
 .news-crowl>li:hover {
-	background:lightgray;
+	font-weight: 700;
 }
 
-footer {
-	display:block;
-	background: gray;
-	text-align: center;
-	height: 200px;
-	padding-top:100px;
-	
-}
 
 .ntitle {
 	background: lightblue;
@@ -108,7 +108,7 @@ footer {
 }
 
 .ncrowl {
-	width:40%;
+	width:45%;
 	margin:0;
 	display: inline-block;
 }
@@ -128,4 +128,30 @@ footer {
 .air-more-title{
 	font-size: 15px;
 	font-weight: 700;
+}
+.cpyr {
+	width:60%;
+	text-align: center;
+	padding-top:140px;
+	display: inline-block;
+}
+.sns {
+	display:inline-block;
+	width:35%;
+	text-align: center;
+	
+}
+
+.snsImg {
+	width: 80px;
+	height: 80px;
+}
+
+
+footer {
+	display:block;
+	background: gray;
+	text-align: center;
+	height: 300px;
+	
 }
